@@ -1,10 +1,10 @@
-import { compose, spacing, palette, breakpoints } from '@material-ui/system'
 import styled from 'styled-components'
+import Box from '@material-ui/core/Box'
 
-const Box = styled.div`
-  ${breakpoints(compose(spacing, palette))}
+const StyledHeader = styled(Box)`
+  display: flex;
 `
 
 export default function Header() {
-  return <Box>Header</Box>
+  return <StyledHeader p={1}>Header</StyledHeader>
 }

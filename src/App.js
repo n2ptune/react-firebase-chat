@@ -2,10 +2,14 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Header from 'components/common/Header'
 import Main from 'pages/Main'
 import Room from 'pages/Room'
+import { ThemeProvider } from 'styled-components'
+import { createMuiTheme } from '@material-ui/core'
+
+const theme = createMuiTheme()
 
 function App() {
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <Header />
       <Router>
         <Switch>
@@ -13,7 +17,7 @@ function App() {
           <Route path="/room" component={Room} />
         </Switch>
       </Router>
-    </>
+    </ThemeProvider>
   )
 }
 
