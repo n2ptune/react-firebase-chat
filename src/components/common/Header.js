@@ -28,7 +28,7 @@ const ButtonBox = styled(Box)`
 
 export default function Header() {
   const classes = useStyles()
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
 
   return (
     <StyledHeader
@@ -45,7 +45,9 @@ export default function Header() {
       <ButtonBox>
         <Button size="small" disabled={isLoading}>
           로그인
-          <CircularProgress size={16} className={classes.loadingButton} />
+          {isLoading && (
+            <CircularProgress size={16} className={classes.loadingButton} />
+          )}
         </Button>
       </ButtonBox>
     </StyledHeader>

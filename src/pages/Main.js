@@ -1,3 +1,5 @@
+import { Container } from '@material-ui/core'
+
 export default function Main() {
-  return <div>Main Page</div>
+  return <Container maxWidth="md">Main page</Container>
 }
