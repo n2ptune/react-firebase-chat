@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { Box, Button, CircularProgress, makeStyles } from '@material-ui/core'
 import { grey, blue } from '@material-ui/core/colors'
 import { useState } from 'react'
+import LoginDialog from 'components/auth/LoginDialog'
 
 const useStyles = makeStyles(theme => {
   return {
@@ -29,6 +30,15 @@ const ButtonBox = styled(Box)`
 export default function Header() {
   const classes = useStyles()
   const [isLoading, setIsLoading] = useState(false)
+  const [openDialog, setOpenDialog] = useState(false)
+
+  function handleOpenDialog() {
+    setOpenDialog(true)
+  }
+
+  function handleCloseDialog() {
+    setOpenDialog(false)
+  }
 
   return (
     <StyledHeader
@@ -43,13 +53,14 @@ export default function Header() {
         모두챗
       </Box>
       <ButtonBox>
-        <Button size="small" disabled={isLoading}>
+        <Button size="small" disabled={isLoading} onClick={handleOpenDialog}>
           로그인
           {isLoading && (
             <CircularProgress size={16} className={classes.loadingButton} />
           )}
         </Button>
       </ButtonBox>
+      <LoginDialog open={openDialog} onClose={handleCloseDialog} />
     </StyledHeader>
   )
 }

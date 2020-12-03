@@ -3,7 +3,7 @@ import Header from 'components/common/Header'
 import Main from 'pages/Main'
 import Room from 'pages/Room'
 import { ThemeProvider } from 'styled-components'
-import { createMuiTheme } from '@material-ui/core'
+import { unstable_createMuiStrictModeTheme as createMuiTheme } from '@material-ui/core'
 
 const theme = createMuiTheme()
 
