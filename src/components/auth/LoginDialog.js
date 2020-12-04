@@ -2,16 +2,26 @@ import React, { useState } from 'react'
 import {
   Button,
   Dialog,
-  DialogActions,
   DialogContent,
   DialogTitle,
+  Divider,
   makeStyles,
   TextField
 } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => {
   return {
-    form: {}
+    form: {},
+    divider: {
+      margin: `${theme.spacing(2)}px 0`
+    },
+    loginButton: {
+      borderRadius: '5px',
+      border: `1px solid ${theme.palette.primary.main}`,
+      color: theme.palette.primary.main,
+      marginTop: theme.spacing(2),
+      fontWeight: theme.typography.fontWeightBold
+    }
   }
 })
 
@@ -26,6 +36,10 @@ function LoginDialog(props) {
 
   function handlePasswordChange(event) {
     setPassword(event.target.value)
+  }
+
+  function handleLogin() {
+    console.log(email, password)
   }
 
   return (
@@ -45,7 +59,7 @@ function LoginDialog(props) {
             margin="normal"
             onChange={handleEmailChange}
             value={email}
-            variant="filled"
+            variant="outlined"
           />
           <TextField
             fullWidth
@@ -54,13 +68,19 @@ function LoginDialog(props) {
             onChange={handlePasswordChange}
             type="password"
             value={password}
-            variant="filled"
+            variant="outlined"
           />
+          <Button
+            className={classes.loginButton}
+            fullWidth
+            disableRipple
+            onClick={handleLogin}
+          >
+            로그인
+          </Button>
         </form>
+        <Divider variant="fullWidth" className={classes.divider} />
       </DialogContent>
-      <DialogActions>
-        <Button onClick={() => props.onClose()}>CLOSE</Button>
-      </DialogActions>
     </Dialog>
   )
 }
