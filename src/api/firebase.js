@@ -1,5 +1,8 @@
+/** @type {firebase.default} */
 let app = null
+/** @type {firebase.default.firestore} */
 let db = null
+/** @type {firebase.default.auth} */
 let auth = null
 
 function init() {
