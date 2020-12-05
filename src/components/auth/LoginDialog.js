@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import {
   Button,
+  ButtonGroup,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -8,6 +9,7 @@ import {
   makeStyles,
   TextField
 } from '@material-ui/core'
+import { login } from 'api/auth'
 
 const useStyles = makeStyles(theme => {
   return {
@@ -15,11 +17,13 @@ const useStyles = makeStyles(theme => {
     divider: {
       margin: `${theme.spacing(2)}px 0`
     },
-    loginButton: {
-      borderRadius: '5px',
-      border: `1px solid ${theme.palette.primary.main}`,
-      color: theme.palette.primary.main,
+    buttonGroup: {
       marginTop: theme.spacing(2),
+      marginBottom: theme.spacing(2),
+      width: '100%'
+    },
+    buttonCommon: {
+      width: '100%',
       fontWeight: theme.typography.fontWeightBold
     }
   }
@@ -38,8 +42,10 @@ function LoginDialog(props) {
     setPassword(event.target.value)
   }
 
-  function handleLogin() {
-    console.log(email, password)
+  async function handleLogin() {
+    const user = await login.email(email, password)
+
+    console.log(user)
   }
 
   return (
@@ -70,14 +76,19 @@ function LoginDialog(props) {
             value={password}
             variant="outlined"
           />
-          <Button
-            className={classes.loginButton}
-            fullWidth
-            disableRipple
-            onClick={handleLogin}
-          >
-            로그인
-          </Button>
+          <ButtonGroup variant="outlined" className={classes.buttonGroup}>
+            <Button
+              disableRipple
+              onClick={handleLogin}
+              color="primary"
+              className={classes.buttonCommon}
+            >
+              로그인
+            </Button>
+            <Button color="secondary" className={classes.buttonCommon}>
+              회원가입
+            </Button>
+          </ButtonGroup>
         </form>
         <Divider variant="fullWidth" className={classes.divider} />
       </DialogContent>

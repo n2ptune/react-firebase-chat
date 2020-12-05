@@ -1,7 +1,8 @@
-import { auth } from 'api/firebase'
+import firebase from 'api/firebase'
 
 function createAccount(email, password) {
-  return auth()
+  return firebase
+    .auth()
     .createUserWithEmailAndPassword(email, password)
     .then(user => user)
     .catch(error => error)
