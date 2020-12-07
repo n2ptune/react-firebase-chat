@@ -5,7 +5,6 @@ export async function email(email, password) {
     const userCredential = await firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-
     return userCredential
   } catch (error) {
     throw authErrorHandler(error.code)

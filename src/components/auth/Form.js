@@ -6,7 +6,7 @@ import {
   TextField,
   Typography
 } from '@material-ui/core'
-import { login } from 'api/auth'
+import { login, create } from 'api/auth'
 
 const useStyles = makeStyles(theme => {
   return {
@@ -20,11 +20,14 @@ const useStyles = makeStyles(theme => {
       width: '100%',
       fontWeight: theme.typography.fontWeightBold
     },
-    errorMessage: {
-      fontSize: theme.typography.pxToRem(12),
+    statusMessage: {
+      fontSize: theme.typography.pxToRem(14),
       textDecoration: 'underline',
       marginBottom: theme.spacing(1),
-      color: theme.palette.error.main
+      color: theme.palette.success.main,
+      '&.erorr': {
+        color: theme.palette.error.main
+      }
     }
   }
 })
@@ -34,7 +37,8 @@ export default function LoginForm(props) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [errorMessage, setErrorMessage] = useState('')
+  const [statusMessage, setStatusMessage] = useState('')
+  const [onError, setOnError] = useState(false)
 
   function handleEmailChange(event) {
     setEmail(event.target.value)
@@ -50,10 +54,28 @@ export default function LoginForm(props) {
     try {
       const userCredential = await login.email(email, password)
       props.toggleUser(userCredential.user)
-      setErrorMessage('')
       props.onClose()
     } catch (errorMessage) {
-      setErrorMessage(errorMessage)
+      setOnError(true)
+      setStatusMessage(errorMessage)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  async function handleSignUp() {
+    setIsLoading(true)
+
+    try {
+      const isSuccess = await create.email(email, password)
+
+      if (isSuccess) {
+        setOnError(false)
+        setStatusMessage('회원가입 성공 이메일을 확인해주세요.')
+      }
+    } catch (errorMessage) {
+      setOnError(true)
+      setStatusMessage(errorMessage)
     } finally {
       setIsLoading(false)
     }
@@ -64,14 +86,19 @@ export default function LoginForm(props) {
       setEmail('')
       setPassword('')
       setIsLoading(false)
-      setErrorMessage('')
+      setStatusMessage('')
+      setOnError(false)
     }
   }, [])
 
   return (
     <form className={classes.form} noValidate autoComplete="off">
-      {errorMessage && (
-        <Typography className={classes.errorMessage}>{errorMessage}</Typography>
+      {statusMessage && (
+        <Typography
+          className={`${onError && 'erorr'} ${classes.statusMessage}`}
+        >
+          {statusMessage}
+        </Typography>
       )}
       <TextField
         fullWidth
@@ -97,10 +124,16 @@ export default function LoginForm(props) {
           onClick={handleLogin}
           color="primary"
           className={classes.buttonCommon}
+          disabled={isLoading}
         >
           로그인
         </Button>
-        <Button color="secondary" className={classes.buttonCommon}>
+        <Button
+          onClick={handleSignUp}
+          color="secondary"
+          className={classes.buttonCommon}
+          disabled={isLoading}
+        >
           회원가입
         </Button>
       </ButtonGroup>
