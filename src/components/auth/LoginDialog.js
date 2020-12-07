@@ -7,6 +7,7 @@ import {
   makeStyles
 } from '@material-ui/core'
 import LoginForm from './Form'
+import UserContext from 'context/user'
 
 const useStyles = makeStyles(theme => {
   return {
@@ -30,7 +31,11 @@ function LoginDialog(props) {
     >
       <DialogTitle id="login-form-title">로그인</DialogTitle>
       <DialogContent>
-        <LoginForm />
+        <UserContext.Consumer>
+          {({ user, isLoggedIn, toggleUser }) => (
+            <LoginForm onClose={props.onClose} toggleUser={toggleUser} />
+          )}
+        </UserContext.Consumer>
         <Divider variant="fullWidth" className={classes.divider} />
       </DialogContent>
     </Dialog>

@@ -1,8 +1,15 @@
 import styled from 'styled-components'
-import { Box, Button, CircularProgress, makeStyles } from '@material-ui/core'
+import {
+  Avatar,
+  Box,
+  Button,
+  CircularProgress,
+  makeStyles
+} from '@material-ui/core'
 import { grey, blue } from '@material-ui/core/colors'
 import { useState } from 'react'
 import LoginDialog from 'components/auth/LoginDialog'
+import UserContext from 'context/user'
 
 const useStyles = makeStyles(theme => {
   return {
@@ -52,15 +59,38 @@ export default function Header() {
       <Box fontSize={18} fontWeight="bold">
         모두챗
       </Box>
-      <ButtonBox>
-        <Button size="small" disabled={isLoading} onClick={handleOpenDialog}>
-          로그인
-          {isLoading && (
-            <CircularProgress size={16} className={classes.loadingButton} />
-          )}
-        </Button>
-      </ButtonBox>
-      <LoginDialog open={openDialog} onClose={handleCloseDialog} />
+      <UserContext.Consumer>
+        {({ user, isLoggedIn, toggleUser }) =>
+          isLoggedIn ? (
+            <>
+              <Avatar src={user.photoURL || ''}>
+                {user.photoURL
+                  ? ''
+                  : user.displayName || user.email[0].toUpperCase()}
+              </Avatar>
+            </>
+          ) : (
+            <>
+              <ButtonBox>
+                <Button
+                  size="small"
+                  disabled={isLoading}
+                  onClick={handleOpenDialog}
+                >
+                  로그인
+                  {isLoading && (
+                    <CircularProgress
+                      size={16}
+                      className={classes.loadingButton}
+                    />
+                  )}
+                </Button>
+              </ButtonBox>
+              <LoginDialog open={openDialog} onClose={handleCloseDialog} />
+            </>
+          )
+        }
+      </UserContext.Consumer>
     </StyledHeader>
   )
 }

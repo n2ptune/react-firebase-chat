@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Button,
   ButtonGroup,
@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => {
   }
 })
 
-export default function LoginForm() {
+export default function LoginForm(props) {
   const classes = useStyles()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -49,15 +49,25 @@ export default function LoginForm() {
     setIsLoading(true)
 
     try {
-      const user = await login.email(email, password)
-      console.log(user)
+      const userCredential = await login.email(email, password)
+      props.toggleUser(userCredential.user)
       setErrorMessage('')
+      props.onClose()
     } catch (error) {
       setErrorMessage(authErrorHandler(error.code))
     } finally {
       setIsLoading(false)
     }
   }
+
+  useEffect(() => {
+    return () => {
+      setEmail('')
+      setPassword('')
+      setIsLoading(false)
+      setErrorMessage('')
+    }
+  }, [])
 
   return (
     <form className={classes.form} noValidate autoComplete="off">
