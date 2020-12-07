@@ -7,7 +7,6 @@ import {
   Typography
 } from '@material-ui/core'
 import { login } from 'api/auth'
-import { authErrorHandler } from 'api/auth/login'
 
 const useStyles = makeStyles(theme => {
   return {
@@ -53,8 +52,8 @@ export default function LoginForm(props) {
       props.toggleUser(userCredential.user)
       setErrorMessage('')
       props.onClose()
-    } catch (error) {
-      setErrorMessage(authErrorHandler(error.code))
+    } catch (errorMessage) {
+      setErrorMessage(errorMessage)
     } finally {
       setIsLoading(false)
     }

@@ -1,7 +1,15 @@
 import firebase from 'api/firebase'
 
 export async function email(email, password) {
-  return await firebase.auth().signInWithEmailAndPassword(email, password)
+  try {
+    const userCredential = await firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+
+    return userCredential
+  } catch (error) {
+    throw authErrorHandler(error.code)
+  }
 }
 
 export function authErrorHandler(errorCode) {
