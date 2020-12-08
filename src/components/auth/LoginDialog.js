@@ -8,6 +8,7 @@ import {
 } from '@material-ui/core'
 import LoginForm from './Form'
 import UserContext from 'context/user'
+import SocialWrapper from './SocialWrapper'
 
 const useStyles = makeStyles(theme => {
   return {
@@ -37,6 +38,7 @@ function LoginDialog(props) {
           )}
         </UserContext.Consumer>
         <Divider variant="fullWidth" className={classes.divider} />
+        <SocialWrapper onClose={props.onClose} />
       </DialogContent>
     </Dialog>
   )

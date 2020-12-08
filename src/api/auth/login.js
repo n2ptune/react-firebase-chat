@@ -10,6 +10,17 @@ class NotVerifiedEmailException {
   }
 }
 
+export async function google() {
+  const googleProvider = new firebase.auth.GoogleAuthProvider()
+
+  try {
+    const userCredential = await firebase.auth().signInWithPopup(googleProvider)
+    return userCredential.user
+  } catch (error) {
+    throw authErrorHandler(error.code)
+  }
+}
+
 export async function email(email, password) {
   try {
     const userCredential = await firebase
