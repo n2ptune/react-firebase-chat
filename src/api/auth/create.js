@@ -2,7 +2,10 @@ import firebase from 'api/firebase'
 
 export async function email(email, password) {
   try {
-    await firebase.auth().createUserWithEmailAndPassword(email, password)
+    const userCredential = await firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+    await userCredential.user.sendEmailVerification()
     return true
   } catch (error) {
     throw createErrorHandler(error.code)
