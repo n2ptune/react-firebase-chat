@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   Backdrop,
   CircularProgress,
@@ -38,6 +38,13 @@ export default function SocialWrapper({ onClose }) {
     setSnackbar({ ...snackObj, visible: true })
   }
 
+  useEffect(() => {
+    return () => {
+      setBackdrop(false)
+      setSnackbar({})
+    }
+  }, [])
+
   return (
     <>
       <div className={classes.root}>
@@ -53,7 +60,7 @@ export default function SocialWrapper({ onClose }) {
         </UserContext.Consumer>
       </div>
       <Backdrop className={classes.backdrop} open={backdrop}>
-        <CircularProgress />
+        <CircularProgress color="inherit" />
       </Backdrop>
       <Snackbar
         open={snackbar.visible}

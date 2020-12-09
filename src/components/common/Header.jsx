@@ -1,15 +1,10 @@
 import styled from 'styled-components'
-import {
-  Avatar,
-  Box,
-  Button,
-  CircularProgress,
-  makeStyles
-} from '@material-ui/core'
+import { Box, Button, CircularProgress, makeStyles } from '@material-ui/core'
 import { grey, blue } from '@material-ui/core/colors'
 import { useState } from 'react'
 import LoginDialog from 'components/auth/LoginDialog'
 import UserContext from 'context/user'
+import PopoverAvatar from './PopoverAvatar'
 
 const useStyles = makeStyles(theme => {
   return {
@@ -41,10 +36,12 @@ export default function Header() {
 
   function handleOpenDialog() {
     setOpenDialog(true)
+    setIsLoading(true)
   }
 
   function handleCloseDialog() {
     setOpenDialog(false)
+    setIsLoading(false)
   }
 
   return (
@@ -62,13 +59,7 @@ export default function Header() {
       <UserContext.Consumer>
         {({ user, isLoggedIn, toggleUser }) =>
           isLoggedIn ? (
-            <>
-              <Avatar src={user.photoURL || ''}>
-                {user.photoURL
-                  ? ''
-                  : user.displayName || user.email[0].toUpperCase()}
-              </Avatar>
-            </>
+            <PopoverAvatar user={user} />
           ) : (
             <>
               <ButtonBox>
