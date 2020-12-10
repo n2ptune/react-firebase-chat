@@ -1,10 +1,6 @@
-import {
-  Popover,
-  Avatar as LibAvatar,
-  Typography,
-  makeStyles
-} from '@material-ui/core'
+import { Popover, Avatar as LibAvatar } from '@material-ui/core'
 import React, { useState } from 'react'
+import PopoverList from './List'
 
 function Avatar({ user, onClick }) {
   return (
@@ -14,16 +10,7 @@ function Avatar({ user, onClick }) {
   )
 }
 
-const useStyles = makeStyles(theme => {
-  return {
-    typography: {
-      padding: theme.spacing(2)
-    }
-  }
-})
-
 export default function PopoverAvatar({ user }) {
-  const classes = useStyles()
   const [open, setOpen] = useState(false)
   const [targetEL, setTargetEL] = useState(null)
 
@@ -50,9 +37,7 @@ export default function PopoverAvatar({ user }) {
           horizontal: 'center'
         }}
       >
-        <Typography className={classes.typography}>
-          The content of the Popover.
-        </Typography>
+        <PopoverList />
       </Popover>
     </>
   )

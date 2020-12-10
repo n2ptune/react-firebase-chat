@@ -4,7 +4,7 @@ import { grey, blue } from '@material-ui/core/colors'
 import { useState } from 'react'
 import LoginDialog from 'components/auth/LoginDialog'
 import UserContext from 'context/user'
-import PopoverAvatar from './PopoverAvatar'
+import PopoverAvatar from './popover/Avatar'
 
 const useStyles = makeStyles(theme => {
   return {

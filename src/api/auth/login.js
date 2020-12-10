@@ -10,6 +10,14 @@ class NotVerifiedEmailException {
   }
 }
 
+export async function logout() {
+  try {
+    await firebase.auth().signOut()
+  } catch (error) {
+    throw error
+  }
+}
+
 export async function google() {
   const googleProvider = new firebase.auth.GoogleAuthProvider()
 

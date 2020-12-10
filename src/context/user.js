@@ -3,7 +3,8 @@ import React from 'react'
 const UserContext = React.createContext({
   user: null,
   isLoggedIn: false,
-  toggleUser: () => {}
+  toggleUser: userCredential => {},
+  logoutUser: () => {}
 })
 
 UserContext.displayName = 'UserContext'

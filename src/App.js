@@ -25,10 +25,18 @@ class App extends React.Component {
       }))
     }
 
+    this.logoutUser = () => {
+      this.setState(state => ({
+        user: null,
+        isLoggedIn: false
+      }))
+    }
+
     this.state = {
       user: null,
       isLoggedIn: false,
-      toggleUser: this.toggleUser
+      toggleUser: this.toggleUser,
+      logoutUser: this.logoutUser
     }
   }
 
