@@ -52,7 +52,11 @@ export default function LoginForm(props) {
     setIsLoading(true)
 
     try {
-      const userCredential = await login.email(email, password)
+      // const userCredential = await login.email(email, password)
+      const userCredential = await login.email(
+        'vue2598@gmail.com',
+        process.env.REACT_APP_TEST_PASSWORD
+      )
       props.toggleUser(userCredential.user)
       props.onClose()
     } catch (errorMessage) {

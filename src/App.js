@@ -44,8 +44,8 @@ class App extends React.Component {
     return (
       <ThemeProvider theme={theme}>
         <UserProvider value={this.state}>
-          <Header />
           <Router>
+            <Header />
             <Switch>
               <Route path="/" exact component={Main} />
               <Route path="/room" component={Room} />

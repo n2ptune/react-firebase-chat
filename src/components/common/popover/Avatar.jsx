@@ -4,7 +4,11 @@ import PopoverList from './List'
 
 function Avatar({ user, onClick }) {
   return (
-    <LibAvatar src={user.photoURL || ''} onClick={onClick}>
+    <LibAvatar
+      src={user.photoURL || ''}
+      onClick={onClick}
+      style={{ cursor: 'pointer' }}
+    >
       {user.photoURL ? '' : user.displayName || user.email[0].toUpperCase()}
     </LibAvatar>
   )
@@ -19,7 +23,7 @@ export default function PopoverAvatar({ user }) {
     setOpen(true)
   }
 
-  const handlePopoverClose = event => {
+  const handlePopoverClose = () => {
     setTargetEL(null)
     setOpen(false)
   }
@@ -37,7 +41,7 @@ export default function PopoverAvatar({ user }) {
           horizontal: 'center'
         }}
       >
-        <PopoverList />
+        <PopoverList close={handlePopoverClose} />
       </Popover>
     </>
   )
